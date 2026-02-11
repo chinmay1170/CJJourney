@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Promise Day, Janvi 💕</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500;600&display=swap');
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink: #ff6b8a;
+      --deep-pink: #e84393;
+      --light-pink: #fdcbdf;
+      --blush: #fff0f5;
+      --red: #e74c6f;
+      --gold: #f9ca24;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(135deg, #1a0011 0%, #2d0a2e 30%, #1a0025 60%, #0d0015 100%);
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ───── Floating Hearts Background ───── */
+    .hearts-bg {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .floating-heart {
+      position: absolute;
+      bottom: -60px;
+      animation: floatUp linear infinite;
+      opacity: 0.15;
+      font-size: 20px;
+      user-select: none;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0; }
+      10% { opacity: 0.15; }
+      90% { opacity: 0.15; }
+      100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+    }
+
+    /* ───── Intro Screen ───── */
+    #intro-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: radial-gradient(ellipse at center, #2d0a2e 0%, #0d0015 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      transition: opacity 1s ease, visibility 1s ease;
+    }
+
+    #intro-screen.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .intro-heart {
+      font-size: 80px;
+      animation: heartPulse 1s ease-in-out infinite;
+      margin-bottom: 30px;
+      filter: drop-shadow(0 0 20px rgba(255, 107, 138, 0.6));
+    }
+
+    @keyframes heartPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    .intro-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: var(--light-pink);
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .intro-text:nth-child(3) { animation-delay: 0.5s; }
+    .intro-text:nth-child(4) { animation-delay: 1s; }
+
+    .intro-names {
+      font-family: 'Dancing Script', cursive;
+      font-size: 52px;
+      font-weight: 700;
+      background: linear-gradient(90deg, var(--pink), var(--gold), var(--pink));
+      background-size: 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeInUp 1s ease 1.5s forwards, shimmer 3s linear infinite;
+      opacity: 0;
+      margin: 15px 0;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 200% 50%; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .intro-btn {
+      margin-top: 40px;
+      padding: 15px 45px;
+      background: linear-gradient(135deg, var(--pink), var(--deep-pink));
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      opacity: 0;
+      animation: fadeInUp 1s ease 2.5s forwards;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 5px 30px rgba(232, 67, 147, 0.4);
+    }
+
+    .intro-btn:hover {
+      transform: scale(1.08);
+      box-shadow: 0 8px 40px rgba(232, 67, 147, 0.6);
+    }
+
+    /* ───── Main Content ───── */
+    .main-content {
+      position: relative;
+      z-index: 1;
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+    }
+
+    /* ───── Section Styles ───── */
+    .section {
+      margin-bottom: 60px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .section-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: 42px;
+      color: var(--pink);
+      text-align: center;
+      margin-bottom: 25px;
+      text-shadow: 0 0 20px rgba(255, 107, 138, 0.3);
+    }
+
+    .section-divider {
+      text-align: center;
+      font-size: 14px;
+      color: var(--light-pink);
+      opacity: 0.4;
+      margin: 50px 0;
+      letter-spacing: 8px;
+    }
+
+    /* ───── Counter Section ───── */
+    .counter-box {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 107, 138, 0.2);
+      border-radius: 20px;
+      padding: 35px 25px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .counter-label {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: var(--light-pink);
+      margin-bottom: 20px;
+    }
+
+    .counter-grid {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .counter-item {
+      background: linear-gradient(135deg, rgba(255,107,138,0.15), rgba(232,67,147,0.1));
+      border: 1px solid rgba(255,107,138,0.2);
+      border-radius: 15px;
+      padding: 15px 12px;
+      min-width: 80px;
+    }
+
+    .counter-number {
+      font-size: 36px;
+      font-weight: 700;
+      color: var(--pink);
+      display: block;
+    }
+
+    .counter-unit {
+      font-size: 12px;
+      color: var(--light-pink);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-top: 5px;
+    }
+
+    .since-date {
+      margin-top: 20px;
+      font-size: 14px;
+      color: rgba(253, 203, 223, 0.5);
+    }
+
+    /* ───── Love Letter ───── */
+    .love-letter {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 107, 138, 0.15);
+      border-radius: 20px;
+      padding: 35px 30px;
+      font-size: 17px;
+      line-height: 1.9;
+      color: rgba(255, 255, 255, 0.85);
+      text-align: center;
+    }
+
+    .love-letter .highlight {
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    .love-letter .name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 24px;
+      color: var(--gold);
+    }
+
+    /* ───── Promise Game ───── */
+    .promise-game {
+      text-align: center;
+    }
+
+    .promise-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 107, 138, 0.2);
+      border-radius: 20px;
+      padding: 40px 30px;
+      margin-bottom: 25px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.5s ease;
+    }
+
+    .promise-question {
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: var(--light-pink);
+      margin-bottom: 30px;
+      line-height: 1.4;
+    }
+
+    .promise-buttons {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      min-height: 60px;
+      width: 100%;
+    }
+
+    .btn-yes {
+      padding: 14px 50px;
+      background: linear-gradient(135deg, var(--pink), var(--deep-pink));
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 20px rgba(232, 67, 147, 0.3);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 30px rgba(232, 67, 147, 0.5);
+    }
+
+    .btn-no {
+      padding: 14px 40px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 50px;
+      color: rgba(255, 255, 255, 0.6);
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .promise-response {
+      display: none;
+      font-size: 20px;
+      color: var(--light-pink);
+      line-height: 1.6;
+    }
+
+    .promise-response .heart-burst {
+      font-size: 40px;
+      display: block;
+      margin-bottom: 10px;
+      animation: heartPulse 0.8s ease-in-out infinite;
+    }
+
+    .progress-dots {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255, 107, 138, 0.2);
+      transition: background 0.4s ease, transform 0.4s ease;
+    }
+
+    .dot.active {
+      background: var(--pink);
+      transform: scale(1.3);
+      box-shadow: 0 0 10px rgba(255, 107, 138, 0.5);
+    }
+
+    .btn-next {
+      padding: 12px 40px;
+      background: rgba(255, 107, 138, 0.15);
+      border: 1px solid rgba(255, 107, 138, 0.3);
+      border-radius: 50px;
+      color: var(--pink);
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-next:hover {
+      background: rgba(255, 107, 138, 0.25);
+      transform: scale(1.05);
+    }
+
+    /* ───── Promises List ───── */
+    .promises-list {
+      display: none;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .promises-list.show {
+      display: flex;
+    }
+
+    .promise-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 107, 138, 0.15);
+      border-radius: 15px;
+      padding: 20px 25px;
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.8);
+      opacity: 0;
+      transform: translateX(-20px);
+      animation: slideIn 0.5s ease forwards;
+      text-align: left;
+    }
+
+    .promise-item:nth-child(1) { animation-delay: 0.1s; }
+    .promise-item:nth-child(2) { animation-delay: 0.25s; }
+    .promise-item:nth-child(3) { animation-delay: 0.4s; }
+    .promise-item:nth-child(4) { animation-delay: 0.55s; }
+    .promise-item:nth-child(5) { animation-delay: 0.7s; }
+    .promise-item:nth-child(6) { animation-delay: 0.85s; }
+    .promise-item:nth-child(7) { animation-delay: 1.0s; }
+    .promise-item:nth-child(8) { animation-delay: 1.15s; }
+    .promise-item:nth-child(9) { animation-delay: 1.3s; }
+
+    .promise-item .promise-emoji {
+      margin-right: 10px;
+    }
+
+    @keyframes slideIn {
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* ───── Click Heart Game ───── */
+    .heart-game {
+      text-align: center;
+    }
+
+    .heart-game-area {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 138, 0.15);
+      border-radius: 20px;
+      padding: 30px;
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .heart-game-instruction {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 15px;
+    }
+
+    .heart-score {
+      font-family: 'Dancing Script', cursive;
+      font-size: 24px;
+      color: var(--pink);
+      margin-bottom: 15px;
+    }
+
+    .click-heart {
+      position: absolute;
+      font-size: 30px;
+      pointer-events: none;
+      animation: clickHeartAnim 1s ease forwards;
+    }
+
+    @keyframes clickHeartAnim {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      50% { transform: scale(1.5) rotate(15deg); opacity: 1; }
+      100% { transform: scale(0.5) translateY(-80px) rotate(-15deg); opacity: 0; }
+    }
+
+    .love-meter {
+      margin-top: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      height: 25px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .love-meter-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--pink), var(--deep-pink), var(--gold));
+      border-radius: 50px;
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .love-meter-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      font-weight: 600;
+      color: #fff;
+      text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+    }
+
+    .love-message-reveal {
+      margin-top: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 26px;
+      color: var(--gold);
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .love-message-reveal.show {
+      opacity: 1;
+    }
+
+    /* ───── Final Section ───── */
+    .final-section {
+      text-align: center;
+      padding: 40px 20px;
+    }
+
+    .final-message {
+      font-family: 'Dancing Script', cursive;
+      font-size: 36px;
+      color: var(--pink);
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+
+    .final-sub {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
+    }
+
+    .final-heart {
+      font-size: 60px;
+      display: inline-block;
+      animation: heartPulse 1s ease-in-out infinite;
+      margin-top: 30px;
+      filter: drop-shadow(0 0 30px rgba(255, 107, 138, 0.5));
+    }
+
+    .signature {
+      margin-top: 40px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 28px;
+      color: var(--gold);
+    }
+
+    /* ───── Heart Rain ───── */
+    .heart-rain {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 999;
+      display: none;
+    }
+
+    .rain-heart {
+      position: absolute;
+      top: -50px;
+      animation: rainFall linear forwards;
+      font-size: 24px;
+    }
+
+    @keyframes rainFall {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* ───── Typewriter ───── */
+    .typewriter {
+      display: inline;
+    }
+
+    .typewriter-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1em;
+      background: var(--pink);
+      margin-left: 2px;
+      animation: blink 0.8s step-end infinite;
+      vertical-align: text-bottom;
+    }
+
+    @keyframes blink {
+      50% { opacity: 0; }
+    }
+
+    /* ───── Sparkle on click ───── */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      font-size: 16px;
+      z-index: 998;
+      animation: sparkleFade 0.8s ease forwards;
+    }
+
+    @keyframes sparkleFade {
+      0% { transform: scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: scale(1) rotate(180deg) translateY(-30px); opacity: 0; }
+    }
+
+    /* ───── Love Note Section ───── */
+    .lovenote-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 107, 138, 0.2);
+      border-radius: 20px;
+      padding: 35px 25px;
+      text-align: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .lovenote-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    .lovenote-textarea {
+      width: 100%;
+      min-height: 140px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 107, 138, 0.2);
+      border-radius: 15px;
+      padding: 18px 20px;
+      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      resize: vertical;
+      outline: none;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .lovenote-textarea::placeholder {
+      color: rgba(255, 255, 255, 0.25);
+      font-style: italic;
+    }
+
+    .lovenote-textarea:focus {
+      border-color: rgba(255, 107, 138, 0.5);
+      box-shadow: 0 0 20px rgba(255, 107, 138, 0.1);
+    }
+
+    .lovenote-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .lovenote-char-count {
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.35);
+    }
+
+    .lovenote-send {
+      padding: 13px 35px;
+      background: linear-gradient(135deg, var(--pink), var(--deep-pink));
+      border: none;
+      border-radius: 50px;
+      color: #fff;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 20px rgba(232, 67, 147, 0.3);
+    }
+
+    .lovenote-send:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 30px rgba(232, 67, 147, 0.5);
+    }
+
+    .lovenote-send:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .lovenote-sent {
+      display: none;
+      margin-top: 25px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(255,107,138,0.12), rgba(249,202,36,0.08));
+      border: 1px solid rgba(249, 202, 36, 0.25);
+      border-radius: 15px;
+      text-align: center;
+    }
+
+    .lovenote-sent.show {
+      display: block;
+      animation: fadeInUp 0.6s ease forwards;
+    }
+
+    .sent-heart {
+      font-size: 36px;
+      display: block;
+      margin-bottom: 10px;
+      animation: heartPulse 1s ease-in-out infinite;
+    }
+
+    .sent-text {
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: var(--gold);
+    }
+
+    /* ───── World Tour Section ───── */
+    .world-tour {
+      text-align: center;
+    }
+
+    .tour-card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 107, 138, 0.2);
+      border-radius: 20px;
+      padding: 35px 25px;
+      backdrop-filter: blur(10px);
+    }
+
+    .tour-subtitle {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 25px;
+      line-height: 1.7;
+    }
+
+    .tour-subtitle .highlight {
+      color: var(--pink);
+      font-weight: 600;
+    }
+
+    .destination-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 25px 0;
+    }
+
+    .destination {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 107, 138, 0.12);
+      border-radius: 14px;
+      padding: 18px 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+    }
+
+    .destination:hover, .destination.visited {
+      background: linear-gradient(135deg, rgba(255,107,138,0.15), rgba(232,67,147,0.1));
+      border-color: rgba(255, 107, 138, 0.35);
+      transform: scale(1.05);
+    }
+
+    .destination.visited {
+      box-shadow: 0 0 15px rgba(255, 107, 138, 0.2);
+    }
+
+    .dest-emoji {
+      font-size: 28px;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .dest-name {
+      font-size: 12px;
+      color: var(--light-pink);
+      font-weight: 500;
+    }
+
+    .dest-food {
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 4px;
+      display: block;
+    }
+
+    .tour-meghalaya {
+      margin-top: 25px;
+      padding: 20px;
+      background: linear-gradient(135deg, rgba(100,200,200,0.08), rgba(255,107,138,0.06));
+      border: 1px solid rgba(100, 200, 200, 0.2);
+      border-radius: 15px;
+      font-size: 15px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+    }
+
+    .tour-meghalaya .mem-highlight {
+      color: #7ec8c8;
+      font-weight: 600;
+    }
+
+    .tour-counter {
+      margin-top: 20px;
+      font-family: 'Dancing Script', cursive;
+      font-size: 22px;
+      color: var(--gold);
+    }
+
+    .tour-counter span {
+      font-size: 30px;
+      font-weight: 700;
+    }
+
+    /* ───── Responsive ───── */
+    @media (max-width: 600px) {
+      .intro-heart { font-size: 60px; margin-bottom: 20px; }
+      .intro-text { font-size: 22px; }
+      .intro-names { font-size: 32px; }
+      .intro-btn { padding: 13px 35px; font-size: 16px; margin-top: 30px; }
+
+      .main-content { padding: 30px 16px 80px; }
+
+      .section { margin-bottom: 40px; }
+      .section-title { font-size: 30px; margin-bottom: 18px; }
+      .section-divider { margin: 35px 0; }
+
+      .counter-box { padding: 25px 15px; }
+      .counter-label { font-size: 18px; }
+      .counter-grid { gap: 8px; }
+      .counter-number { font-size: 24px; }
+      .counter-item { min-width: 48px; padding: 10px 6px; border-radius: 10px; }
+      .counter-unit { font-size: 9px; letter-spacing: 1px; }
+
+      .love-letter { padding: 25px 18px; font-size: 14px; line-height: 1.8; }
+      .love-letter .name { font-size: 20px; }
+
+      .promise-card { padding: 28px 18px; min-height: 200px; }
+      .promise-question { font-size: 20px; margin-bottom: 22px; }
+      .btn-yes { padding: 12px 36px; font-size: 16px; }
+      .btn-no { padding: 10px 28px; font-size: 14px; }
+      .promise-response { font-size: 16px; }
+      .btn-next { padding: 10px 30px; font-size: 14px; }
+      .progress-dots { gap: 7px; margin-bottom: 20px; }
+      .dot { width: 8px; height: 8px; }
+      .promise-item { padding: 15px 18px; font-size: 14px; }
+
+      .heart-game-area { min-height: 220px; padding: 20px; }
+      .heart-score { font-size: 20px; }
+      .love-message-reveal { font-size: 20px; }
+
+      .destination-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+      .destination { padding: 14px 6px; border-radius: 10px; }
+      .dest-emoji { font-size: 22px; }
+      .dest-name { font-size: 10px; }
+      .dest-food { font-size: 9px; }
+      .tour-meghalaya { padding: 16px; font-size: 13px; }
+      .tour-subtitle { font-size: 14px; }
+
+      .lovenote-card { padding: 25px 18px; }
+      .lovenote-subtitle { font-size: 14px; }
+      .lovenote-textarea { font-size: 14px; padding: 14px 16px; min-height: 120px; }
+      .lovenote-send { padding: 11px 28px; font-size: 14px; }
+      .lovenote-char-count { font-size: 11px; }
+      .sent-text { font-size: 18px; }
+
+      .final-message { font-size: 24px; }
+      .final-sub { font-size: 14px; }
+      .final-heart { font-size: 45px; }
+      .signature { font-size: 22px; }
+    }
+
+    @media (max-width: 380px) {
+      .intro-names { font-size: 28px; }
+      .section-title { font-size: 26px; }
+      .counter-item { min-width: 44px; }
+      .counter-number { font-size: 20px; }
+      .destination-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div class="hearts-bg" id="heartsBg"></div>
+
+  <!-- Heart Rain Container -->
+  <div class="heart-rain" id="heartRain"></div>
+
+  <!-- ═══════ INTRO SCREEN ═══════ -->
+  <div id="intro-screen">
+    <div class="intro-heart">💕</div>
+    <div class="intro-text">Happy Promise Day</div>
+    <div class="intro-text">~ 11th February 2026 ~</div>
+    <div class="intro-names">Chinmay & Janvi</div>
+    <button class="intro-btn" onclick="enterSite()">Open My Heart 💌</button>
+  </div>
+
+  <!-- ═══════ MAIN CONTENT ═══════ -->
+  <div class="main-content" id="mainContent" style="display:none;">
+
+    <!-- ── Our Journey Counter ── -->
+    <div class="section" id="sec-counter">
+      <div class="section-title">Our Journey Together</div>
+      <div class="counter-box">
+        <div class="counter-label">We have been in love for...</div>
+        <div class="counter-grid">
+          <div class="counter-item">
+            <span class="counter-number" id="c-years">0</span>
+            <span class="counter-unit">Years</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="c-months">0</span>
+            <span class="counter-unit">Months</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="c-days">0</span>
+            <span class="counter-unit">Days</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="c-hours">0</span>
+            <span class="counter-unit">Hours</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="c-mins">0</span>
+            <span class="counter-unit">Mins</span>
+          </div>
+          <div class="counter-item">
+            <span class="counter-number" id="c-secs">0</span>
+            <span class="counter-unit">Secs</span>
+          </div>
+        </div>
+        <div class="since-date">since 25th May 2023 ♥</div>
+      </div>
+    </div>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
+    <!-- ── Love Letter ── -->
+    <div class="section" id="sec-letter">
+      <div class="section-title">A Letter For You</div>
+      <div class="love-letter">
+        Dear <span class="name">Janvi</span>,<br><br>
+        On this beautiful <span class="highlight">Promise Day</span>, I want to tell you something from the bottom of my heart. Every single day since <span class="highlight">25th May 2023</span> has been the most beautiful chapter of my life. You walked into my world and turned the ordinary into something magical.<br><br>
+        I love the way you get excited about <span class="highlight">trying a new cuisine</span>, how your eyes light up when a plate of <span class="highlight">sushi</span> arrives, how you see the world through your camera and somehow <span class="highlight">click photos</span> that capture feelings, not just moments.<br><br>
+        I see how hard you're working right now — grinding through <span class="highlight">GMAT and CAT</span> prep — and I just want you to know: I am so, so proud of you. The world has no idea what's coming when <span class="highlight">Janvi walks into her MBA classroom</span> next year. You're going to be unstoppable.<br><br>
+        From our <span class="highlight">two Goa trips</span> to the calm of <span class="highlight">Coorg</span>, every trip with you has been an adventure. But our <span class="highlight">4th trip — Meghalaya</span>? That one was special. Seeing you wrapped in that cold misty air, smiling between the living root bridges and waterfalls — that's a picture my heart will never delete. We're just getting started, baby.<br><br>
+        Today, I don't just want to make promises — I want to seal them with every beat of my heart. 💕<br><br>
+        ~ <span class="name">Chinmay</span>
+      </div>
+    </div>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
+    <!-- ── Promise Game ── -->
+    <div class="section" id="sec-promises">
+      <div class="section-title">My Promises To You</div>
+      <div class="promise-game" id="promiseGame">
+        <div class="progress-dots" id="progressDots"></div>
+        <div class="promise-card" id="promiseCard">
+          <div class="promise-question" id="promiseQuestion"></div>
+          <div class="promise-buttons" id="promiseButtons">
+            <button class="btn-yes" onclick="answerYes()">Yes! 💕</button>
+            <button class="btn-no" id="btnNo" onmouseover="runAwayNo()" onclick="runAwayNo()">No</button>
+          </div>
+          <div class="promise-response" id="promiseResponse">
+            <span class="heart-burst">💖</span>
+            <span id="responseText"></span>
+            <button class="btn-next" id="btnNext" onclick="nextPromise()">Next Promise →</button>
+          </div>
+        </div>
+      </div>
+      <div class="promises-list" id="promisesList"></div>
+    </div>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
+    <!-- ── Heart Click Game ── -->
+    <div class="section" id="sec-heartgame">
+      <div class="section-title">Fill Our Love Meter</div>
+      <div class="heart-game">
+        <div class="heart-game-instruction">Tap anywhere in the box to fill our love meter!</div>
+        <div class="heart-score">Hearts: <span id="heartCount">0</span> / 50</div>
+        <div class="heart-game-area" id="heartGameArea" onclick="clickHeart(event)">
+          <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:60px;opacity:0.1;pointer-events:none;">💕</div>
+        </div>
+        <div class="love-meter">
+          <div class="love-meter-fill" id="loveMeterFill"></div>
+          <div class="love-meter-text" id="loveMeterText">0%</div>
+        </div>
+        <div class="love-message-reveal" id="loveMessageReveal">
+          You filled it up! 💖<br>
+          Just like how you fill my life with love every single day, Janvi!
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
+    <!-- ── World Tour Promise ── -->
+    <div class="section" id="sec-worldtour">
+      <div class="section-title">Our World Tour Bucket List</div>
+      <div class="world-tour">
+        <div class="tour-card">
+          <div class="tour-subtitle">
+            I promise to take you around the world, one <span class="highlight">cuisine</span>, one <span class="highlight">photo</span>, one <span class="highlight">adventure</span> at a time.<br>
+            Tap each destination to add it to our dream list!
+          </div>
+          <div class="destination-grid" id="destGrid">
+            <div class="destination" onclick="visitDest(this)" data-place="Japan">
+              <span class="dest-emoji">🇯🇵</span>
+              <span class="dest-name">Japan</span>
+              <span class="dest-food">sushi at Tsukiji</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Italy">
+              <span class="dest-emoji">🇮🇹</span>
+              <span class="dest-name">Italy</span>
+              <span class="dest-food">pasta in Rome</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Paris">
+              <span class="dest-emoji">🇫🇷</span>
+              <span class="dest-name">Paris</span>
+              <span class="dest-food">croissants & Eiffel</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Switzerland">
+              <span class="dest-emoji">🇨🇭</span>
+              <span class="dest-name">Switzerland</span>
+              <span class="dest-food">chocolate & snow</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Bali">
+              <span class="dest-emoji">🇮🇩</span>
+              <span class="dest-name">Bali</span>
+              <span class="dest-food">nasi goreng & sunsets</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Greece">
+              <span class="dest-emoji">🇬🇷</span>
+              <span class="dest-name">Greece</span>
+              <span class="dest-food">gyros in Santorini</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Thailand">
+              <span class="dest-emoji">🇹🇭</span>
+              <span class="dest-name">Thailand</span>
+              <span class="dest-food">pad thai & temples</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="Korea">
+              <span class="dest-emoji">🇰🇷</span>
+              <span class="dest-name">Korea</span>
+              <span class="dest-food">Korean BBQ & K-drama spots</span>
+            </div>
+            <div class="destination" onclick="visitDest(this)" data-place="New Zealand">
+              <span class="dest-emoji">🇳🇿</span>
+              <span class="dest-name">New Zealand</span>
+              <span class="dest-food">adventure & stars</span>
+            </div>
+          </div>
+          <div class="tour-counter">
+            <span id="destCount">0</span> / 9 destinations dreamed 
+          </div>
+          <div class="tour-meghalaya">
+            <span class="mem-highlight">4 trips and counting:</span> From the beaches of <span class="mem-highlight">Goa</span> (twice!), the coffee estates of <span class="mem-highlight">Coorg</span>, to the misty living root bridges of <span class="mem-highlight">Meghalaya</span> — you loved the cold weather, the waterfalls, and every moment we spent exploring the northeast together. That trip proved it: we're the best travel partners. The world is next. 🌏💕
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
+    <!-- ── Love Note Section ── -->
+    <div class="section" id="sec-lovenote">
+      <div class="section-title">Write Me a Note, Janvi</div>
+      <div class="lovenote-card">
+        <div class="lovenote-subtitle">
+          Type anything — a promise, a thought, a sweet nothing.<br>
+          It'll fly straight to my heart (and my inbox 💌).
+        </div>
+        <form id="loveNoteForm" action="https://formsubmit.co/chinmaykrishna3@gmail.com" method="POST">
+          <!-- FormSubmit config -->
+          <input type="hidden" name="_subject" value="💕 A Love Note from Janvi — Promise Day 2026">
+          <input type="hidden" name="_captcha" value="false">
+          <input type="hidden" name="_template" value="box">
+          <input type="hidden" name="_next" value="#">
+          <input type="text" name="_honey" style="display:none">
+
+          <textarea 
+            id="loveNoteText" 
+            name="message" 
+            class="lovenote-textarea" 
+            placeholder="Dear Chinmay, I promise to..."
+            rows="5"
+            required
+          ></textarea>
+          <div class="lovenote-footer">
+            <span class="lovenote-char-count"><span id="charCount">0</span> characters of love</span>
+            <button type="submit" class="lovenote-send" id="sendNoteBtn">
+              Send to Chinmay 💌
+            </button>
+          </div>
+        </form>
+        <div class="lovenote-sent" id="loveSentMsg">
+          <span class="sent-heart">💕</span>
+          <span class="sent-text">Your note just made Chinmay's heart skip a beat!</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-divider">♥ ♥ ♥ ♥ ♥</div>
+
+    <!-- ── Final Section ── -->
+    <div class="section" id="sec-final">
+      <div class="final-section">
+        <div class="final-message">
+          I promise to love you<br>
+          today, tomorrow,<br>
+          and every day after that...
+        </div>
+        <div class="final-sub">
+          Through your GMAT prep nights and CAT mock tests — I'll be your study buddy and stress reliever.<br>
+          When you walk into your MBA college next year — I'll be the proudest person alive.<br>
+          From Goa to Coorg to Meghalaya to the entire world — every adventure will be ours.<br>
+          Every new restaurant, every sushi plate, every photo you click — I want to be in the frame.<br><br>
+          You are my best friend, my soulmate, my favourite foodie partner, and my forever person.<br>
+          No matter what life throws at us, I'll always be right here — holding your hand.<br><br>
+          Happy Promise Day, my love. 💕
+        </div>
+        <div class="final-heart">💗</div>
+        <div class="signature">Forever yours, Chinmay</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ═══════ FLOATING HEARTS BACKGROUND ═══════
+    function createFloatingHearts() {
+      const container = document.getElementById('heartsBg');
+      const hearts = ['♥', '💕', '💗', '💖', '❤', '♡', '💘'];
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('span');
+        heart.className = 'floating-heart';
+        heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (8 + Math.random() * 12) + 's';
+        heart.style.animationDelay = Math.random() * 10 + 's';
+        heart.style.fontSize = (14 + Math.random() * 20) + 'px';
+        container.appendChild(heart);
+      }
+    }
+    createFloatingHearts();
+
+    // ═══════ SPARKLE ON CLICK ═══════
+    document.addEventListener('click', (e) => {
+      const sparkles = ['✨', '💕', '♥', '💖', '✧'];
+      for (let i = 0; i < 3; i++) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'sparkle';
+        sparkle.textContent = sparkles[Math.floor(Math.random() * sparkles.length)];
+        sparkle.style.left = (e.clientX + (Math.random() - 0.5) * 40) + 'px';
+        sparkle.style.top = (e.clientY + (Math.random() - 0.5) * 40) + 'px';
+        document.body.appendChild(sparkle);
+        setTimeout(() => sparkle.remove(), 800);
+      }
+    });
+
+    // ═══════ INTRO ═══════
+    function enterSite() {
+      document.getElementById('intro-screen').classList.add('hidden');
+      document.getElementById('mainContent').style.display = 'block';
+      startCounter();
+      setTimeout(observeSections, 100);
+      triggerHeartRain();
+    }
+
+    // ═══════ HEART RAIN ═══════
+    function triggerHeartRain() {
+      const container = document.getElementById('heartRain');
+      container.style.display = 'block';
+      const hearts = ['💕', '💗', '💖', '❤️', '♥', '💘', '💝'];
+      for (let i = 0; i < 50; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('span');
+          heart.className = 'rain-heart';
+          heart.textContent = hearts[Math.floor(Math.random() * hearts.length)];
+          heart.style.left = Math.random() * 100 + '%';
+          heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+          heart.style.fontSize = (16 + Math.random() * 20) + 'px';
+          container.appendChild(heart);
+          setTimeout(() => heart.remove(), 5000);
+        }, i * 80);
+      }
+      setTimeout(() => { container.style.display = 'none'; }, 6000);
+    }
+
+    // ═══════ SCROLL REVEAL ═══════
+    function observeSections() {
+      const sections = document.querySelectorAll('.section');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.15 });
+      sections.forEach(s => observer.observe(s));
+    }
+
+    // ═══════ LOVE COUNTER ═══════
+    function startCounter() {
+      const startDate = new Date('2023-05-25T00:00:00');
+      function update() {
+        const now = new Date();
+        let diff = now - startDate;
+
+        let years = now.getFullYear() - startDate.getFullYear();
+        let months = now.getMonth() - startDate.getMonth();
+        let days = now.getDate() - startDate.getDate();
+        let hours = now.getHours() - startDate.getHours();
+        let mins = now.getMinutes() - startDate.getMinutes();
+        let secs = now.getSeconds() - startDate.getSeconds();
+
+        if (secs < 0) { secs += 60; mins--; }
+        if (mins < 0) { mins += 60; hours--; }
+        if (hours < 0) { hours += 24; days--; }
+        if (days < 0) {
+          const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+          days += prevMonth.getDate();
+          months--;
+        }
+        if (months < 0) { months += 12; years--; }
+
+        document.getElementById('c-years').textContent = years;
+        document.getElementById('c-months').textContent = months;
+        document.getElementById('c-days').textContent = days;
+        document.getElementById('c-hours').textContent = hours;
+        document.getElementById('c-mins').textContent = mins;
+        document.getElementById('c-secs').textContent = secs;
+      }
+      update();
+      setInterval(update, 1000);
+    }
+
+    // ═══════ PROMISE GAME ═══════
+    const promises = [
+      {
+        question: "Do you promise to always be with me?",
+        response: "And I promise to always be with you — through every GMAT study session, every late night, every triumph. You & me, always. 🌅",
+        emoji: "🤝"
+      },
+      {
+        question: "Do you promise to never let go of my hand?",
+        response: "I'll hold your hand so tight — just like I did on those cold Meghalaya mornings and those Goa sunsets. Never letting go. 🤞",
+        emoji: "🫶"
+      },
+      {
+        question: "Do you promise to try every weird food I find?",
+        response: "Every sushi roll, every street food stall, every strange cuisine — we'll taste the whole world together! 🍣",
+        emoji: "🍱"
+      },
+      {
+        question: "Do you promise to love me even on my worst days?",
+        response: "Especially on your worst days. I'll bring you sushi, wrap you in a blanket, and remind you how amazing you are. 🌈",
+        emoji: "🥺"
+      },
+      {
+        question: "Do you promise to let me be your biggest cheerleader?",
+        response: "CAT, GMAT, MBA, career — whatever comes next, I'll be your loudest fan in the front row. Always. 📣",
+        emoji: "🎓"
+      },
+      {
+        question: "Do you promise to pose for my photos forever?",
+        response: "As long as you promise to keep clicking! My favourite photos are always the ones with you in them. 📸",
+        emoji: "📸"
+      },
+      {
+        question: "Do you promise to take me on a world tour?",
+        response: "Pack your bags, Janvi! From Tokyo to Paris, Bali to Switzerland — our adventure has only just begun! 🌍✈️",
+        emoji: "✈️"
+      },
+      {
+        question: "Do you promise to grow old with me?",
+        response: "I want to be the old couple who still shares sushi, still travels the world, and still makes everyone jealous! 👴👵",
+        emoji: "👫"
+      },
+      {
+        question: "Do you promise that our love story will be forever?",
+        response: "Not just forever... From 25th May 2023 to infinity. Our love story has no last page. ♾️💕",
+        emoji: "♾️"
+      }
+    ];
+
+    let currentPromise = 0;
+
+    function initPromiseGame() {
+      const dotsContainer = document.getElementById('progressDots');
+      promises.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = 'dot' + (i === 0 ? ' active' : '');
+        dotsContainer.appendChild(dot);
+      });
+      showPromise(0);
+    }
+
+    function showPromise(index) {
+      document.getElementById('promiseQuestion').textContent = promises[index].question;
+      document.getElementById('promiseButtons').style.display = 'flex';
+      document.getElementById('promiseResponse').style.display = 'none';
+      const btnNo = document.getElementById('btnNo');
+      btnNo.style.position = 'relative';
+      btnNo.style.left = '0px';
+      btnNo.style.top = '0px';
+    }
+
+    let noRunCount = 0;
+    function runAwayNo() {
+      const btn = document.getElementById('btnNo');
+      const card = document.getElementById('promiseCard');
+      const cardRect = card.getBoundingClientRect();
+      noRunCount++;
+
+      const maxX = 100;
+      const maxY = 60;
+      const newX = (Math.random() - 0.5) * maxX * 2;
+      const newY = (Math.random() - 0.5) * maxY * 2;
+
+      btn.style.position = 'relative';
+      btn.style.left = newX + 'px';
+      btn.style.top = newY + 'px';
+      btn.style.transition = 'left 0.2s ease, top 0.2s ease';
+
+      const messages = ["Nope!", "Try again!", "Can't click me!", "Hehe!", "Not happening!", "💕 Say Yes!", "You can't!", "Nooo way!"];
+      btn.textContent = messages[noRunCount % messages.length];
+
+      if (noRunCount > 5) {
+        btn.style.fontSize = '12px';
+        btn.style.padding = '8px 20px';
+        btn.style.opacity = '0.5';
+      }
+    }
+
+    function answerYes() {
+      noRunCount = 0;
+      const btnNo = document.getElementById('btnNo');
+      btnNo.textContent = 'No';
+      btnNo.style.fontSize = '16px';
+      btnNo.style.padding = '14px 40px';
+      btnNo.style.opacity = '1';
+
+      document.getElementById('promiseButtons').style.display = 'none';
+      const response = document.getElementById('promiseResponse');
+      response.style.display = 'block';
+      document.getElementById('responseText').textContent = promises[currentPromise].response;
+
+      if (currentPromise === promises.length - 1) {
+        document.getElementById('btnNext').textContent = 'See All My Promises 💕';
+      }
+
+      // Mini heart burst
+      for (let i = 0; i < 8; i++) {
+        setTimeout(() => {
+          const sparkle = document.createElement('span');
+          sparkle.className = 'sparkle';
+          sparkle.textContent = '💖';
+          sparkle.style.left = (window.innerWidth / 2 + (Math.random() - 0.5) * 200) + 'px';
+          sparkle.style.top = (window.innerHeight / 2 + (Math.random() - 0.5) * 200) + 'px';
+          sparkle.style.fontSize = '24px';
+          document.body.appendChild(sparkle);
+          setTimeout(() => sparkle.remove(), 800);
+        }, i * 100);
+      }
+    }
+
+    function nextPromise() {
+      currentPromise++;
+      const dots = document.querySelectorAll('.dot');
+
+      if (currentPromise < promises.length) {
+        dots[currentPromise].classList.add('active');
+        showPromise(currentPromise);
+      } else {
+        // Show all promises summary
+        document.getElementById('promiseGame').style.display = 'none';
+        showAllPromises();
+      }
+    }
+
+    function showAllPromises() {
+      const list = document.getElementById('promisesList');
+      list.classList.add('show');
+
+      promises.forEach((p, i) => {
+        const item = document.createElement('div');
+        item.className = 'promise-item';
+        item.innerHTML = `<span class="promise-emoji">${p.emoji}</span> ${p.question.replace('Do you promise', 'I promise')}`;
+        list.appendChild(item);
+      });
+
+      // Final item
+      setTimeout(() => {
+        const finalItem = document.createElement('div');
+        finalItem.className = 'promise-item';
+        finalItem.style.animationDelay = '1.5s';
+        finalItem.style.background = 'linear-gradient(135deg, rgba(255,107,138,0.15), rgba(249,202,36,0.1))';
+        finalItem.style.borderColor = 'rgba(249,202,36,0.3)';
+        finalItem.style.textAlign = 'center';
+        finalItem.style.fontSize = '18px';
+        finalItem.innerHTML = `💕 All these promises are sealed with love — forever and always, Janvi. 💕`;
+        list.appendChild(finalItem);
+      }, 200);
+
+      triggerHeartRain();
+    }
+
+    initPromiseGame();
+
+    // ═══════ HEART CLICK GAME ═══════
+    let heartCount = 0;
+    const maxHearts = 50;
+    const heartEmojis = ['💖', '💕', '💗', '❤️', '💘', '💝', '💓', '♥'];
+
+    function clickHeart(e) {
+      if (heartCount >= maxHearts) return;
+
+      heartCount++;
+      document.getElementById('heartCount').textContent = heartCount;
+
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const heart = document.createElement('span');
+      heart.className = 'click-heart';
+      heart.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      heart.style.left = x + 'px';
+      heart.style.top = y + 'px';
+      e.currentTarget.appendChild(heart);
+      setTimeout(() => heart.remove(), 1000);
+
+      const pct = Math.min((heartCount / maxHearts) * 100, 100);
+      document.getElementById('loveMeterFill').style.width = pct + '%';
+      document.getElementById('loveMeterText').textContent = Math.round(pct) + '%';
+
+      if (heartCount >= maxHearts) {
+        document.getElementById('loveMessageReveal').classList.add('show');
+        triggerHeartRain();
+      }
+    }
+
+    // ═══════ WORLD TOUR GAME ═══════
+    let destVisited = 0;
+    function visitDest(el) {
+      if (el.classList.contains('visited')) return;
+      el.classList.add('visited');
+      destVisited++;
+      document.getElementById('destCount').textContent = destVisited;
+
+      // burst emoji
+      const rect = el.getBoundingClientRect();
+      const emojis = ['✈️', '🌍', '📸', '🍣', '💕', '🗺️'];
+      for (let i = 0; i < 4; i++) {
+        const s = document.createElement('span');
+        s.className = 'sparkle';
+        s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+        s.style.left = (rect.left + rect.width / 2 + (Math.random() - 0.5) * 60) + 'px';
+        s.style.top = (rect.top + (Math.random() - 0.5) * 40) + 'px';
+        s.style.fontSize = '20px';
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 800);
+      }
+
+      if (destVisited === 9) {
+        triggerHeartRain();
+      }
+    }
+
+    // ═══════ LOVE NOTE FORM ═══════
+    const loveNoteText = document.getElementById('loveNoteText');
+    const charCount = document.getElementById('charCount');
+
+    loveNoteText.addEventListener('input', () => {
+      charCount.textContent = loveNoteText.value.length;
+    });
+
+    document.getElementById('loveNoteForm').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('sendNoteBtn');
+      const msg = loveNoteText.value.trim();
+      if (!msg) return;
+
+      btn.disabled = true;
+      btn.textContent = 'Sending... 💕';
+
+      try {
+        const formData = new FormData(this);
+        await fetch(this.action, {
+          method: 'POST',
+          body: formData,
+          headers: { 'Accept': 'application/json' }
+        });
+      } catch (err) {
+        // Even if fetch fails (CORS), formsubmit still processes it
+      }
+
+      btn.textContent = 'Sent! 💖';
+      document.getElementById('loveSentMsg').classList.add('show');
+      triggerHeartRain();
+
+      // Burst of hearts around the card
+      for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+          const s = document.createElement('span');
+          s.className = 'sparkle';
+          s.textContent = ['💌', '💕', '💖', '✨', '💗'][Math.floor(Math.random() * 5)];
+          s.style.left = (window.innerWidth / 2 + (Math.random() - 0.5) * 300) + 'px';
+          s.style.top = (window.innerHeight / 2 + (Math.random() - 0.5) * 300) + 'px';
+          s.style.fontSize = '22px';
+          document.body.appendChild(s);
+          setTimeout(() => s.remove(), 800);
+        }, i * 80);
+      }
+    });
+
+    // ═══════ TYPEWRITER (unused but available) ═══════
+    function typewrite(element, text, speed = 50) {
+      let i = 0;
+      element.textContent = '';
+      const cursor = document.createElement('span');
+      cursor.className = 'typewriter-cursor';
+      element.parentNode.appendChild(cursor);
+
+      function type() {
+        if (i < text.length) {
+          element.textContent += text.charAt(i);
+          i++;
+          setTimeout(type, speed);
+        } else {
+          setTimeout(() => cursor.remove(), 2000);
+        }
+      }
+      type();
+    }
+  </script>
+</body>
+</html>
